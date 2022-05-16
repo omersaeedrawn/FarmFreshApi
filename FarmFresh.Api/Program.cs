@@ -18,6 +18,15 @@ builder.Services.AddDbContext<FarmFreshDbContext>(options =>
 
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        });
+});
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -25,18 +34,18 @@ builder.Services.AddAuthentication(x =>
 
 }).AddJwtBearer(o =>
 {
-	var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
-	o.SaveToken = true;
-	o.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuer = false,
-		ValidateAudience = false,
-		ValidateLifetime = true,
-		ValidateIssuerSigningKey = true,
-		ValidIssuer = builder.Configuration["JWT:Issuer"],
-		ValidAudience = builder.Configuration["JWT:Audience"],
-		IssuerSigningKey = new SymmetricSecurityKey(Key)
-	};
+    var Key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
+    o.SaveToken = true;
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Key)
+    };
 });
 
 // Add services to the container.
@@ -63,6 +72,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

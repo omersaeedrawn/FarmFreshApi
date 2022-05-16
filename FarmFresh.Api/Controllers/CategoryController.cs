@@ -23,7 +23,7 @@ namespace FarmFresh.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("GetAll")]
+        [AllowAnonymous, HttpPost("GetAll")]
         public async Task<IActionResult> GetAllAsync([FromBody] PaginationFilter filter)
         {
             var categoryList = await _categoryService.GetAllAsync(filter);
