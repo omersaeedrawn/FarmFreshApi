@@ -9,11 +9,10 @@ namespace FarmFresh.Interfaces.IRepositories
 {
     public interface IRepository<TEntity, TKeyType> where TEntity : class
     {
-        //Task<TEntity> GetByIdAsync(TKeyType id);
-
         IQueryable<TEntity> GetAll();
         IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         Task AddAsync(TEntity entity);
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
         Task Update(TEntity entity);
         Task Remove(TEntity entity);
         int Complete();

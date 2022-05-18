@@ -35,10 +35,10 @@ namespace FarmFresh.Repository
             return _context.Set<TEntity>();
         }
 
-        //public async Task<TEntity> GetByIdAsync(Guid id)
-        //{
-        //    return await _context.Set<TEntity>().FindAsync(id);
-        //}
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _context.AddRangeAsync(entities);
+        }
 
         public async Task Remove(TEntity entity)
         {
